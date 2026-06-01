@@ -2,44 +2,58 @@
   <!-- Navigation -->
   <header class="navbar">
     <div class="nav-brand">
-      <img
-        src="assets/logo.svg"
-        alt="KU Leuven Logo"
-        class="ku-logo"
-      />
+      <a
+        href="https://www.kuleuven.be/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="brand-logo-link"
+        aria-label="Open KU Leuven homepage"
+      >
+        <img src="assets/logo.svg" alt="KU Leuven Logo" class="ku-logo" />
+      </a>
 
-      <div>
-        <div class="brand-title">Building Physics</div>
-        <div class="brand-subtitle">GenAI Challenge</div>
+      <div class="brand-text">
+        <a
+          href="https://iiw.kuleuven.be/onderzoek/building-physics-and-sustainable-design"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="brand-title-link"
+        >
+          Building Physics and Sustainable Design
+        </a>
+
+        <div class="brand-subtitle">GenAI Game</div>
       </div>
     </div>
 
     <nav class="nav-links">
       <button (click)="scrollTo('about')">About</button>
       <button (click)="scrollTo('tasks')">Tasks</button>
-      <button (click)="scrollTo('timeline')">Timeline</button>
+      <!-- <button (click)="scrollTo('timeline')">Timeline</button> -->
       <button (click)="scrollTo('evaluation')">Evaluation</button>
+      <button (click)="scrollTo('leaderboard')">Leaderboard</button>
     </nav>
   </header>
 
   <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-grid"></div>
-    <div class="hero-glow hero-glow-one"></div>
-    <div class="hero-glow hero-glow-two"></div>
+  <section class="hero hero-background">
+    <!-- Background dark/bright overlay -->
+    <div class="hero-overlay"></div>
+
+    <canvas #trainingCanvas class="training-canvas" aria-hidden="true"></canvas>
 
     <div class="hero-content">
-      <div class="hero-label">KU Leuven Building Physics Team</div>
+      <!-- <div class="hero-label">KU Leuven Building Physics Team</div> -->
 
       <h1>
-        GenAI for<br />
-        Building Physics Challenge
+        When buildings<br />
+        learn to listen.
       </h1>
 
-      <p class="hero-description">
-        Exploring how Generative AI can support simulation-based reasoning,
-        performance analysis, and decision-making in the built environment.
-      </p>
+      <!-- <p class="hero-description">
+        A GenAI challenge exploring how artificial intelligence can reveal the
+        hidden structure, performance, and comfort of the built environment.
+      </p> -->
 
       <div class="hero-actions">
         <button class="primary-btn" (click)="scrollTo('tasks')">
@@ -50,46 +64,12 @@
         </button>
       </div>
     </div>
-
-    <div class="hero-visual">
-      <div class="visual-card main-card">
-        <div class="visual-header">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
-        <div class="building-lines">
-          <div class="building building-one"></div>
-          <div class="building building-two"></div>
-          <div class="building building-three"></div>
-        </div>
-
-        <div class="ai-flow">
-          <div>Building Data</div>
-          <div>→</div>
-          <div>GenAI Agent</div>
-          <div>→</div>
-          <div>Simulation Insight</div>
-        </div>
-      </div>
-
-      <div class="floating-card floating-card-one">
-        <span>Energy</span>
-        <strong>Analysis</strong>
-      </div>
-
-      <div class="floating-card floating-card-two">
-        <span>AI-assisted</span>
-        <strong>Reasoning</strong>
-      </div>
-    </div>
   </section>
 
   <!-- About -->
   <section id="about" class="section about-section">
     <div class="section-heading">
-      <span class="section-kicker">About the Challenge</span>
+      <span class="section-kicker">About the Game</span>
       <h2>Connecting Generative AI with building physics research</h2>
     </div>
 
@@ -124,48 +104,143 @@
   <section id="tasks" class="section tasks-section">
     <div class="section-heading centered">
       <span class="section-kicker">Competition Tasks</span>
-      <h2>Two challenge tracks</h2>
+      <h2>Challenge tracks</h2>
       <p>
-        The detailed task descriptions will be announced later. The current
-        website structure is prepared for future updates.
+        Each task asks participants to translate building physics concepts into
+        clear computational logic, visual output, and reproducible
+        documentation.
       </p>
     </div>
 
     <div class="task-grid">
-      <article class="task-card" *ngFor="let task of tasks">
-        <div class="task-top">
-          <span class="task-id">{{ task.id }}</span>
-          <span class="task-status">{{ task.status }}</span>
+      <article class="task-card task-card-featured" *ngFor="let task of tasks">
+        <div class="task-hero-row">
+          <div class="task-hero-text">
+            <div class="task-top">
+              <span class="task-id">{{ task.id }}</span>
+              <span class="task-status mobile-status">{{ task.status }}</span>
+            </div>
+
+            <h3>{{ task.title }}</h3>
+
+            <div class="task-type">
+              {{ task.type }}
+            </div>
+
+            <div class="tag-list">
+              <span *ngFor="let tag of task.tags">{{ tag }}</span>
+            </div>
+          </div>
+
+          <div class="task-hero-image">
+            <span class="task-status desktop-status">{{ task.status }}</span>
+
+            <img
+              src="assets/task-daylight.png"
+              alt="Task 01 daylight metrics visualization"
+            />
+          </div>
         </div>
 
-        <h3>{{ task.title }}</h3>
-        <p>{{ task.description }}</p>
-
-        <div class="tag-list">
-          <span *ngFor="let tag of task.tags">{{ tag }}</span>
+        <div class="task-section">
+          <h4>Problem Statement</h4>
+          <p>{{ task.problemStatement }}</p>
+          <p class="task-note">
+            <strong>Occupied period:</strong> {{ task.occupiedPeriod }}
+          </p>
         </div>
 
-        <button class="task-button" disabled>Details coming soon</button>
+        <div class="task-section">
+          <h4>Workplane Illuminance Dataset</h4>
+
+          <div class="dataset-table-wrapper">
+            <table class="dataset-table">
+              <thead>
+                <tr>
+                  <th>Sensor</th>
+                  <th>Hourly illuminance values</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sensor of task.dataset">
+                  <td>{{ sensor.name }}</td>
+                  <td>{{ sensor.values.join(", ") }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="task-section">
+          <h4>Questions to Solve</h4>
+          <ul>
+            <li *ngFor="let question of task.questions">
+              {{ question }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="task-section">
+          <h4>Goal</h4>
+          <p>{{ task.goal }}</p>
+        </div>
+
+        <div class="task-section">
+          <h4>Brief</h4>
+          <ul>
+            <li *ngFor="let item of task.brief">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="task-section">
+          <h4>Rules</h4>
+          <ul>
+            <li *ngFor="let rule of task.rules">
+              {{ rule }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="task-three-columns">
+          <div class="task-section task-mini-section">
+            <h4>Deliverables</h4>
+            <ul>
+              <li *ngFor="let item of task.deliverables">
+                {{ item }}
+              </li>
+            </ul>
+          </div>
+
+          <div class="task-section task-mini-section">
+            <h4>Scoring Criteria</h4>
+            <ul>
+              <li *ngFor="let item of task.scoring">
+                {{ item }}
+              </li>
+            </ul>
+          </div>
+
+          <div class="task-section task-mini-section">
+            <h4>What It Teaches</h4>
+            <ul>
+              <li *ngFor="let item of task.teaches">
+                {{ item }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <a
+          class="task-submit-button"
+          [href]="task.submitUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ task.submission }}
+        </a>
       </article>
-    </div>
-  </section>
-
-  <!-- Timeline -->
-  <section id="timeline" class="section timeline-section">
-    <div class="section-heading">
-      <span class="section-kicker">Timeline</span>
-      <h2>Challenge schedule</h2>
-    </div>
-
-    <div class="timeline">
-      <div class="timeline-item" *ngFor="let item of timeline; let i = index">
-        <div class="timeline-index">{{ i + 1 }}</div>
-        <div>
-          <h3>{{ item.phase }}</h3>
-          <span>{{ item.date }}</span>
-          <p>{{ item.description }}</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -175,10 +250,10 @@
       <div class="section-heading">
         <span class="section-kicker">Evaluation</span>
         <h2>What solutions will be evaluated on</h2>
-        <p>
+        <!-- <p>
           Evaluation criteria will be refined once the task descriptions are
           finalized.
-        </p>
+        </p> -->
       </div>
 
       <div class="evaluation-list">
@@ -190,23 +265,142 @@
     </div>
   </section>
 
+  <!-- Leaderboard -->
+  <section id="leaderboard" class="section leaderboard-section">
+    <div class="section-heading centered">
+      <span class="section-kicker">Leaderboard</span>
+      <h2>Live Rankings</h2>
+    </div>
+
+    <!-- Overall Winner -->
+    <div class="overall-winner-bar">
+      <div>
+        <span class="leaderboard-task-label">Overall</span>
+        <h3>Final Winner</h3>
+      </div>
+
+      <button
+        class="confirm-winner-btn"
+        type="button"
+        [disabled]="getOverallTopTeams().length === 0"
+        (click)="confirmWinner()"
+      >
+        Confirm Winner
+      </button>
+    </div>
+
+    <div class="leaderboard-grid">
+      <article
+        class="leaderboard-card"
+        *ngFor="let taskName of leaderboardTasks"
+      >
+        <div class="leaderboard-card-header">
+          <div>
+            <span class="leaderboard-task-label">{{ taskName }}</span>
+            <h3>Top 3 Teams</h3>
+          </div>
+        </div>
+
+        <div
+          class="top-three"
+          *ngIf="getTopTeamsByTask(taskName).length > 0; else waitingForScores"
+        >
+          <div
+            class="top-team-card"
+            *ngFor="let team of getTopTeamsByTask(taskName)"
+            [class.rank-one]="team.rank === 1"
+            [class.rank-two]="team.rank === 2"
+            [class.rank-three]="team.rank === 3"
+          >
+            <div class="rank-badge">#{{ team.rank }}</div>
+            <div class="team-name">{{ team.team }}</div>
+            <div class="team-score">{{ team.total }}</div>
+          </div>
+        </div>
+
+        <ng-template #waitingForScores>
+          <div class="leaderboard-empty">Waiting for scores...</div>
+        </ng-template>
+
+        <div class="leaderboard-table-wrapper">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Technical</th>
+                <th>Workflow</th>
+                <th>Visuals</th>
+                <th>Verification</th>
+                <th>Documentation</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let row of getLeaderboardRowsByTask(taskName)">
+                <td class="team-cell">{{ row.team }}</td>
+                <td>{{ row.technicalCorrectness ?? "—" }}</td>
+                <td>{{ row.workflowProcessLogic ?? "—" }}</td>
+                <td>{{ row.visualsDesign ?? "—" }}</td>
+                <td>{{ row.verificationValidation ?? "—" }}</td>
+                <td>{{ row.clarityDocumentation ?? "—" }}</td>
+                <td class="total-cell">
+                  {{ row.total ?? "—" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Winner Modal -->
+  <div
+    class="winner-modal-backdrop"
+    *ngIf="showWinnerModal"
+    (click)="closeWinnerModal()"
+  >
+    <div class="winner-modal" (click)="$event.stopPropagation()">
+      <div class="confetti confetti-one"></div>
+      <div class="confetti confetti-two"></div>
+      <div class="confetti confetti-three"></div>
+      <div class="confetti confetti-four"></div>
+
+      <div class="winner-trophy">🏆</div>
+      <div class="winner-label">Winner</div>
+
+      <div class="winner-team">
+        {{ confirmedWinner?.team }}
+      </div>
+
+      <div class="winner-score">
+        Overall score · {{ confirmedWinner?.total }} points
+      </div>
+
+      <button
+        class="winner-close-btn"
+        type="button"
+        (click)="closeWinnerModal()"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+
   <!-- Team -->
   <section class="section team-section">
     <div class="team-card">
       <span class="section-kicker">Organized by</span>
-      <h2>KU Leuven Building Physics Team</h2>
-      <p>
-        This website is prepared as a public landing page for a GenAI
-        competition hosted by the Building Physics research group.
-      </p>
+      <h2>KU Leuven Building Physics and Sustainable Design Team</h2>
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="footer">
     <p>
-      © 2026 KU Leuven Building Physics Team. GenAI for Building Physics
-      Challenge.
+      © 2026 KU Leuven Building Physics and Sustainable Design Team. GenAI Game
+      for Building Physics.
     </p>
   </footer>
 </div>
