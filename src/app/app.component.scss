@@ -356,6 +356,161 @@
   background: linear-gradient(180deg, #f6f8fb, #eef4fa);
 }
 
+.tasks-intro-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  gap: 34px;
+  align-items: stretch;
+  margin-bottom: 28px;
+}
+
+.tasks-intro-left {
+  padding: 44px;
+  border-radius: 34px;
+  background:
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(158, 232, 255, 0.32),
+      transparent 34%
+    ),
+    linear-gradient(135deg, #ffffff, #f6f9fc);
+  border: 1px solid #dfe8f2;
+  box-shadow: 0 24px 70px rgba(7, 24, 50, 0.08);
+
+  h2 {
+    margin: 18px 0 0;
+    color: #071832;
+    font-size: clamp(44px, 5vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -0.06em;
+    font-weight: 950;
+  }
+
+  p {
+    max-width: 760px;
+    margin: 24px 0 0;
+    color: #52657a;
+    font-size: 19px;
+    line-height: 1.65;
+  }
+}
+
+.submission-check-card {
+  padding: 34px;
+  border-radius: 34px;
+  color: white;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(158, 232, 255, 0.36),
+      transparent 38%
+    ),
+    linear-gradient(145deg, #071832, #0b2f4a);
+  box-shadow: 0 28px 80px rgba(7, 24, 50, 0.22);
+}
+
+.check-card-header {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+
+  h3 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.68);
+    line-height: 1.55;
+  }
+}
+
+.check-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  color: #061020;
+  background: #9ee8ff;
+  font-weight: 900;
+}
+
+.submission-items {
+  display: grid;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.submission-item {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  column-gap: 14px;
+  row-gap: 4px;
+  align-items: center;
+  padding: 15px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  span {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+    color: #9ee8ff;
+    background: rgba(158, 232, 255, 0.12);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  strong {
+    font-size: 16px;
+  }
+
+  em {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 13px;
+    font-style: normal;
+  }
+}
+
+.workflow-rules {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 52px;
+}
+
+.workflow-rule-card {
+  padding: 20px;
+  border-radius: 24px;
+  background: white;
+  border: 1px solid #dfe8f2;
+  box-shadow: 0 16px 44px rgba(7, 24, 50, 0.06);
+
+  span {
+    display: block;
+    color: #071832;
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1.25;
+  }
+
+  p {
+    margin: 10px 0 0;
+    color: #607186;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
 .task-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -1012,6 +1167,37 @@
       font-size: 30px;
       line-height: 1.1;
     }
+  }
+
+  .tasks-intro-panel {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 22px;
+  }
+
+  .tasks-intro-left,
+  .submission-check-card {
+    padding: 28px 24px;
+    border-radius: 26px;
+  }
+
+  .tasks-intro-left h2 {
+    font-size: 40px;
+  }
+
+  .tasks-intro-left p {
+    font-size: 16px;
+  }
+
+  .workflow-rules {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 38px;
+  }
+
+  .workflow-rule-card {
+    padding: 18px;
+    border-radius: 20px;
   }
 
   .task-top {

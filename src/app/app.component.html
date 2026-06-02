@@ -102,18 +102,78 @@
 
   <!-- Tasks -->
   <section id="tasks" class="section tasks-section">
-    <div class="section-heading centered">
-      <span class="section-kicker">Competition Tasks</span>
-      <h2>Challenge tracks</h2>
-      <p>
-        Each task asks participants to translate building physics concepts into
-        clear computational logic, visual output, and reproducible
-        documentation.
-      </p>
+    <div class="tasks-intro-panel">
+      <div class="tasks-intro-left">
+        <span class="section-kicker">GenAI Games</span>
+
+        <h2>Tasks & Submission Rules</h2>
+
+        <p>
+          Find the challenge briefs, required outputs, and submission guidelines
+          for the GenAI Games.
+        </p>
+      </div>
+
+      <div class="submission-check-card">
+        <div class="check-card-header">
+          <span class="check-icon">✓</span>
+          <div>
+            <h3>Each submission must include</h3>
+            <p>For every task, please submit a clear solution package.</p>
+          </div>
+        </div>
+
+        <div class="submission-items">
+          <div class="submission-item">
+            <span>01</span>
+            <strong>Team name</strong>
+          </div>
+
+          <div class="submission-item">
+            <span>02</span>
+            <strong>Main output</strong>
+            <em>solution / deliverable</em>
+          </div>
+
+          <div class="submission-item">
+            <span>03</span>
+            <strong>How we did it</strong>
+            <em>AI workflow documentation</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="workflow-rules">
+      <div class="workflow-rule-card">
+        <span>AI tools used</span>
+        <p>Which tools did you employ?</p>
+      </div>
+
+      <div class="workflow-rule-card">
+        <span>Main prompt or workflow</span>
+        <p>What did you ask the AI to do?</p>
+      </div>
+
+      <div class="workflow-rule-card">
+        <span>Manual checks</span>
+        <p>Did you verify the AI output?</p>
+      </div>
+
+      <div class="workflow-rule-card">
+        <span>Where AI helped most</span>
+        <p>Which part did AI solve best?</p>
+      </div>
+
+      <div class="workflow-rule-card">
+        <span>Confidence level</span>
+        <p>Rate your confidence from 1–5.</p>
+      </div>
     </div>
 
     <div class="task-grid">
       <article class="task-card task-card-featured" *ngFor="let task of tasks">
+        <!-- Task Header -->
         <div class="task-hero-row">
           <div class="task-hero-text">
             <div class="task-top">
@@ -132,25 +192,70 @@
             </div>
           </div>
 
+          <!-- Task image placeholder: currently left blank -->
           <div class="task-hero-image">
             <span class="task-status desktop-status">{{ task.status }}</span>
-
-            <img
-              src="assets/task-daylight.png"
-              alt="Task 01 daylight metrics visualization"
-            />
+            <img *ngIf="task.imageUrl" [src]="task.imageUrl" />
           </div>
         </div>
 
+        <!-- Problem Statement -->
         <div class="task-section">
           <h4>Problem Statement</h4>
           <p>{{ task.problemStatement }}</p>
-          <p class="task-note">
+
+          <p class="task-note" *ngIf="task.occupiedPeriod">
             <strong>Occupied period:</strong> {{ task.occupiedPeriod }}
           </p>
         </div>
 
-        <div class="task-section">
+        <!-- Task 03: Target Audience -->
+        <div class="task-section" *ngIf="task.targetAudience">
+          <h4>Target Audience</h4>
+          <ul>
+            <li *ngFor="let audience of task.targetAudience">
+              {{ audience }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Task 03: Required Content -->
+        <div class="task-section" *ngIf="task.requiredContent">
+          <h4>Required Content</h4>
+          <ul>
+            <li *ngFor="let item of task.requiredContent">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Task 03: Critical Thinking Exercise -->
+        <div class="task-section" *ngIf="task.criticalThinkingTitle">
+          <h4>{{ task.criticalThinkingTitle }}</h4>
+
+          <p *ngIf="task.criticalThinkingDescription">
+            {{ task.criticalThinkingDescription }}
+          </p>
+
+          <ul *ngIf="task.criticalThinkingOptions">
+            <li *ngFor="let option of task.criticalThinkingOptions">
+              {{ option }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Task 03: Output on Poster -->
+        <div class="task-section" *ngIf="task.posterOutput">
+          <h4>Output on Poster</h4>
+          <ul>
+            <li *ngFor="let item of task.posterOutput">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Task 01: Daylight Dataset -->
+        <div class="task-section" *ngIf="task.dataset">
           <h4>Workplane Illuminance Dataset</h4>
 
           <div class="dataset-table-wrapper">
@@ -161,6 +266,7 @@
                   <th>Hourly illuminance values</th>
                 </tr>
               </thead>
+
               <tbody>
                 <tr *ngFor="let sensor of task.dataset">
                   <td>{{ sensor.name }}</td>
@@ -171,6 +277,47 @@
           </div>
         </div>
 
+        <!-- Task 02: Assumptions -->
+        <div class="task-section" *ngIf="task.assumptions">
+          <h4>Assumptions</h4>
+
+          <ul>
+            <li *ngFor="let assumption of task.assumptions">
+              {{ assumption }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Task 02: Roof Assembly -->
+        <div class="task-section" *ngIf="task.roofAssembly">
+          <h4>Roof Assembly</h4>
+
+          <div class="dataset-table-wrapper">
+            <table class="dataset-table">
+              <thead>
+                <tr>
+                  <th>Material</th>
+                  <th>λ (W/m·K)</th>
+                  <th>Thickness (mm)</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let layer of task.roofAssembly">
+                  <td>{{ layer.material }}</td>
+                  <td>{{ layer.conductivity }}</td>
+                  <td>{{ layer.thickness }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="task-note" *ngIf="task.givenResult">
+            <strong>Given:</strong> {{ task.givenResult }}
+          </p>
+        </div>
+
+        <!-- Questions -->
         <div class="task-section">
           <h4>Questions to Solve</h4>
           <ul>
@@ -180,11 +327,13 @@
           </ul>
         </div>
 
+        <!-- Goal -->
         <div class="task-section">
           <h4>Goal</h4>
           <p>{{ task.goal }}</p>
         </div>
 
+        <!-- Brief -->
         <div class="task-section">
           <h4>Brief</h4>
           <ul>
@@ -194,6 +343,7 @@
           </ul>
         </div>
 
+        <!-- Rules -->
         <div class="task-section">
           <h4>Rules</h4>
           <ul>
@@ -203,6 +353,7 @@
           </ul>
         </div>
 
+        <!-- Three-column information block -->
         <div class="task-three-columns">
           <div class="task-section task-mini-section">
             <h4>Deliverables</h4>
@@ -232,6 +383,7 @@
           </div>
         </div>
 
+        <!-- Submission -->
         <a
           class="task-submit-button"
           [href]="task.submitUrl"

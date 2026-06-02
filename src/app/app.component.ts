@@ -11,6 +11,12 @@ interface SensorDataset {
   values: number[];
 }
 
+interface RoofAssemblyLayer {
+  material: string;
+  conductivity: number;
+  thickness: number;
+}
+
 interface OverallTeam {
   rank: number;
   team: string;
@@ -30,9 +36,25 @@ interface TaskCard {
   title: string;
   type: string;
   status: string;
+
+  imageUrl?: string;
+
   problemStatement: string;
-  occupiedPeriod: string;
-  dataset: SensorDataset[];
+  occupiedPeriod?: string;
+
+  dataset?: SensorDataset[];
+  roofAssembly?: RoofAssemblyLayer[];
+
+  assumptions?: string[];
+  givenResult?: string;
+
+  targetAudience?: string[];
+  requiredContent?: string[];
+  criticalThinkingTitle?: string;
+  criticalThinkingDescription?: string;
+  criticalThinkingOptions?: string[];
+  posterOutput?: string[];
+
   questions: string[];
   goal: string;
   brief: string[];
@@ -87,6 +109,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       title: 'And Then There Was Light',
       type: 'Coding + Visualization',
       status: 'Open',
+
+      imageUrl: 'assets/task-daylight.png',
 
       problemStatement:
         'You have a 3-sensor grid in a small office. The occupied period is 08:00–16:00 over 2 weekdays, resulting in 16 occupied hours in total.',
@@ -164,7 +188,204 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       tags: ['Daylight', 'sDA', 'ASE', 'Sensor Grid', 'Visualization'],
 
       submitUrl:
-        'https://kuleuven-my.sharepoint.com/my?id=%2Fpersonal%2Fruibo%5Ftang%5Fkuleuven%5Fbe%2FDocuments%2FSubmissions&viewid=f70fc928%2Dee07%2D4349%2D9c41%2Dec91b4ea70e7',
+        'https://kuleuven-my.sharepoint.com/personal/clara_lorenz_kuleuven_be/_layouts/15/onedrive.aspx?e=5%3A1df1417a3e164c2fae35471700a21fa1&sharingv2=true&fromShare=true&at=9&CT=1780402155711&OR=OWA%2DNT%2DMail&CID=33c8368d%2D6c37%2D19ac%2D2539%2Db3d9dcb4cf23&SI=NonSentItems&id=%2Fpersonal%2Fclara%5Florenz%5Fkuleuven%5Fbe%2FDocuments%2FDocuments%2FProjects%2Fongoing%2FGenAI%2DGames%2FGenAi%2DGames%2D2026%2FSubmissions&FolderCTID=0x012000D6C9FA67420F5F429E6F6D0A97BFD40E&view=0',
+    },
+
+    {
+      id: 'Task 02',
+      title: 'Heat Leak Havoc',
+      type: 'Calculation + Documentation',
+      status: 'Open',
+      imageUrl: 'assets/task-02.png',
+
+      problemStatement:
+        'The annual transmission heat loss of a roof construction has increased by 350 kWh per year. This increase must be compensated by improving the insulation layer of the roof.',
+
+      assumptions: [
+        'Roof area: 250 m²',
+        'Roof thickness cannot be changed',
+        'Interior surface resistance R_si: 0.10 m²K/W',
+        'Exterior surface resistance R_se: 0.10 m²K/W',
+        'Use the construction data provided below.',
+      ],
+
+      roofAssembly: [
+        {
+          material: 'Insulation',
+          conductivity: 0.04,
+          thickness: 300,
+        },
+        {
+          material: 'Structural timber',
+          conductivity: 0.13,
+          thickness: 140,
+        },
+        {
+          material: 'Service void',
+          conductivity: 0.67,
+          thickness: 110,
+        },
+        {
+          material: 'Plasterboard',
+          conductivity: 0.25,
+          thickness: 12,
+        },
+      ],
+
+      givenResult:
+        'Total construction thickness: 56.2 cm; initial U-value: 0.111 W/(m²K).',
+
+      questions: [
+        'Calculate what conductivity of roof insulation would be required to compensate for the thermal bridge heat loss, assuming the roof thickness cannot be changed.',
+      ],
+
+      goal: 'Determine the required improved insulation conductivity so that the increased annual transmission heat loss is compensated without changing the roof thickness.',
+
+      brief: [
+        'Use the given roof assembly and surface resistances.',
+        'Translate the additional annual heat loss into a required U-value improvement.',
+        'Calculate the new insulation conductivity required while keeping the insulation thickness unchanged.',
+      ],
+
+      rules: [
+        'Use any method: code, spreadsheet, notebook, or simple HTML/SVG.',
+        'Keep the calculation traceable.',
+        'Include units in every calculation step.',
+      ],
+
+      deliverables: [
+        'Single-sentence answer',
+        'Proof of calculation, with units',
+        '“How we did it” documentation',
+      ],
+
+      scoring: [
+        'Technical correctness',
+        'Workflow and process logic',
+        'Verification and validation',
+        'Clarity of documentation',
+      ],
+
+      teaches: [
+        'AI for physics-based calculation',
+        'Translating heat-loss compensation into U-value logic',
+        'Checking units and assumptions',
+        'Documenting computational reasoning',
+      ],
+
+      tags: [
+        'Thermal Bridge',
+        'U-value',
+        'Roof Insulation',
+        'Heat Loss',
+        'Calculation',
+      ],
+
+      submission: 'Submit Solution & Report',
+
+      submitUrl:
+        'https://kuleuven-my.sharepoint.com/personal/clara_lorenz_kuleuven_be/_layouts/15/onedrive.aspx?e=5%3A1df1417a3e164c2fae35471700a21fa1&sharingv2=true&fromShare=true&at=9&CT=1780402155711&OR=OWA%2DNT%2DMail&CID=33c8368d%2D6c37%2D19ac%2D2539%2Db3d9dcb4cf23&SI=NonSentItems&id=%2Fpersonal%2Fclara%5Florenz%5Fkuleuven%5Fbe%2FDocuments%2FDocuments%2FProjects%2Fongoing%2FGenAI%2DGames%2FGenAi%2DGames%2D2026%2FSubmissions&FolderCTID=0x012000D6C9FA67420F5F429E6F6D0A97BFD40E&view=0',
+    },
+
+    {
+      id: 'Task 03',
+      title: 'Picasso, Is That You?',
+      type: 'Research Poster + Critical AI Review',
+      status: 'Open',
+
+      imageUrl: 'assets/task-03.png',
+
+      problemStatement:
+        'Turn one group member’s thesis topic into a clear, visually engaging A1 research poster.',
+
+      targetAudience: [
+        'Visitors',
+        'Prospective students',
+        '3rd-year bachelor students',
+        'Technically curious non-specialists',
+      ],
+
+      requiredContent: [
+        'Title',
+        'Aim: the overall purpose of the research',
+        'Objectives: specific goals',
+        'Method: approach and tools used',
+        'Novelty: what is new?',
+        'Contribution: why it matters',
+        'Visual hook: image, diagram, or concept that draws attention',
+        'Short, accessible explanation',
+      ],
+
+      criticalThinkingTitle: 'AI Gone Wild: Spot the AI Mistakes',
+
+      criticalThinkingDescription:
+        'AI-generated content is not always reliable. Critically interrogate your own poster and clearly mark the detected issues.',
+
+      criticalThinkingOptions: [
+        'Option A: Human vs AI Critic — manually identify 2–3 factual inaccuracies, 2 misleading simplifications, and 1 questionable design or visual choice.',
+        'Option B: AI Critiques Itself — prompt AI to critique the poster, then identify what the AI critique missed and what it got wrong.',
+      ],
+
+      posterOutput: [
+        'Include a small box on the poster titled “Something is not quite right…”',
+        'List and briefly explain the detected issues.',
+      ],
+
+      questions: [
+        'How can a thesis topic be translated into an accessible and visually engaging A1 research poster?',
+        'How can AI-generated poster content be critically checked for factual, technical, and visual problems?',
+      ],
+
+      goal: 'Turn one group member’s thesis topic into a clear, visually engaging A1 research poster.',
+
+      brief: [
+        'Select one thesis topic from within your group.',
+        'Use AI tools to generate a poster that communicates the research in an academically sound yet accessible way.',
+        'Make the poster understandable for visitors, prospective students, bachelor students, and technically curious non-specialists.',
+        'Include a clearly marked critical reflection section that identifies where AI output may be inaccurate, misleading, or visually questionable.',
+      ],
+
+      rules: [
+        'Use any AI-supported workflow for text, layout, visual concepts, diagrams, or poster refinement.',
+        'The poster should be academically sound but accessible to non-specialists.',
+        'The critical thinking section must be clearly visible on the poster.',
+        'Do not blindly trust AI-generated content; verify factual and technical claims manually.',
+      ],
+
+      deliverables: [
+        'A1 research poster',
+        'Clearly marked “Something is not quite right…” box',
+        'Detected AI mistakes or questionable choices',
+        'Short “How we did it” documentation',
+      ],
+
+      scoring: [
+        'Technical correctness',
+        'Workflow and process logic',
+        'Visuals design',
+        'Verification and validation',
+        'Clarity of documentation',
+      ],
+
+      teaches: [
+        'Translating research into visual communication',
+        'Structuring academic content clearly',
+        'Using AI critically rather than blindly',
+        'Identifying where AI can go technically and factually wrong',
+      ],
+
+      submission: 'Submit Solution & Report',
+
+      tags: [
+        'Research Poster',
+        'A1 Poster',
+        'Visual Communication',
+        'Critical AI Use',
+        'Thesis Topic',
+      ],
+
+      submitUrl:
+        'https://kuleuven-my.sharepoint.com/personal/clara_lorenz_kuleuven_be/_layouts/15/onedrive.aspx?e=5%3A1df1417a3e164c2fae35471700a21fa1&sharingv2=true&fromShare=true&at=9&CT=1780402155711&OR=OWA%2DNT%2DMail&CID=33c8368d%2D6c37%2D19ac%2D2539%2Db3d9dcb4cf23&SI=NonSentItems&id=%2Fpersonal%2Fclara%5Florenz%5Fkuleuven%5Fbe%2FDocuments%2FDocuments%2FProjects%2Fongoing%2FGenAI%2DGames%2FGenAi%2DGames%2D2026%2FSubmissions&FolderCTID=0x012000D6C9FA67420F5F429E6F6D0A97BFD40E&view=0',
     },
   ];
 
@@ -173,7 +394,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   leaderboardRows: LeaderboardRow[] = [];
 
-  leaderboardTasks: string[] = ['Task 01', 'Task 02'];
+  leaderboardTasks: string[] = ['Task 01', 'Task 02', 'Task 03'];
 
   leaderboardLoading = false;
   leaderboardError = '';
@@ -586,7 +807,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       });
 
     return Array.from(teamMap.values())
-      .filter((team) => team.taskCount >= 2)
+      .filter((team) => team.taskCount >= this.leaderboardTasks.length)
       .sort((a, b) => b.total - a.total)
       .slice(0, 3)
       .map((team, index) => ({
